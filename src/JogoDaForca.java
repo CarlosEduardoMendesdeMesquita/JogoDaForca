@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.Random;
 
 public class JogoDaForca {
 	static int contadorTemas = 0;
@@ -37,10 +38,9 @@ public class JogoDaForca {
 					break;
 				case 3:
 					clear();
-					// jogo(TemasEPalavras);
+					jogo();
 					break;
 				case 4:
-					// esta dando buffer
 					System.out.println("Obrigado por jogar!");
 					break;
 				default:
@@ -95,21 +95,21 @@ public class JogoDaForca {
 	}
 
 	public static void preCadastro() {
-		String[] Carros = { "Carros", "10", "Monza", "Opala", "Marea", "Doblo",
-				"Ferrari", "Mustang", "Porsche", "Uno", "Gol",
-				"Punto" };
-		String[] Objetos = { "Objetos", "10", "Cadeira", "Chave", "Bola", "Lousa", "Giz",
-				"Lapis", "Caneta", "Borracha",
-				"Canivete", "Regua" };
-		String[] Animais = { "Animais", "10", "Cachorro", "Gato", "Cavalo", "Iguana",
-				"Ratel", "Anta", "Hipopotamo", "Girafa",
-				"Galinha", "Pato" };
-		String[] Paises = { "Paises", "10", "Eslovaquia", "Franca", "Belgica", "Alemanha",
-				"Brasil", "Russia", "Mexico",
-				"Butao", "India", "China" };
-		String[] Cores = { "Cores", "10", "Amarelo", "Vermelho", "Preto", "Cinza",
-				"Branco", "Azul", "Verde", "Laranja",
-				"Bege", "Marrom" };
+		String[] Carros = { "carros", "10", "monza", "opala", "marea", "doblo",
+				"ferrari", "mustang", "porsche", "uno", "gol",
+				"punto" };
+		String[] Objetos = { "objetos", "10", "cadeira", "chave", "bola", "lousa", "giz",
+				"lapis", "caneta", "borracha",
+				"canivete", "regua" };
+		String[] Animais = { "animais", "10", "cachorro", "gato", "cavalo", "iguana",
+				"ratel", "anta", "hipopotamo", "girafa",
+				"galinha", "pato" };
+		String[] Paises = { "paises", "10", "eslovaquia", "franca", "belgica", "alemanha",
+				"brasil", "russia", "mexico",
+				"butao", "india", "china" };
+		String[] Cores = { "cores", "10", "amarelo", "vermelho", "preto", "cinza",
+				"branco", "azul", "verde", "laranja",
+				"bege", "marrom" };
 
 		for (int i = 0; i < 12; i++) {
 			JogoDaForca.TemasEPalavras[0][i] = Carros[i];
@@ -142,7 +142,7 @@ public class JogoDaForca {
 		System.out.println("Lista com temas ja disponiveis:");
 		System.out.println("Caso nao queira checar, digite N/n para ignorar.");
 
-		listar = ler.next().charAt(0);
+		listar = Character.toLowerCase(ler.next().charAt(0));
 		ler.nextLine();
 
 		if (!(listar == 'N' || listar == 'n')) {
@@ -150,7 +150,7 @@ public class JogoDaForca {
 		}
 
 		System.out.println("Digite o tema que deseja adicionar:");
-		novoTema = ler.next();
+		novoTema = ler.next().toLowerCase();
 		ler.nextLine();
 		existe = gerenciarTemas_checarExistencia(novoTema);
 
@@ -186,7 +186,7 @@ public class JogoDaForca {
 		System.out.println("Iniciando a busca de temas!");
 		System.out.println("Digite o Tema que deseja buscar: ");
 
-		buscador = ler.next();
+		buscador = ler.next().toLowerCase();
 		ler.nextLine();
 
 		int posicao = gerenciarTemas_ferramentaDeBusca(buscador);
@@ -202,20 +202,12 @@ public class JogoDaForca {
 	}
 
 	private static int gerenciarTemas_ferramentaDeBusca(String buscador) {
-		boolean encontrei = false;
-		int posicao;
-		for (posicao = 0; posicao < JogoDaForca.contadorTemas; posicao++) {
+		for (int posicao = 0; posicao < JogoDaForca.contadorTemas; posicao++) {
 			if (buscador.equals(JogoDaForca.TemasEPalavras[posicao][0])) {
-
-				encontrei = true;
-				break;
+				return posicao;
 			}
 		}
-		if (encontrei == false) {
-			return -1;
-		} else {
-			return posicao;
-		}
+		return -1;
 	}
 
 	private static void gerenciarPalavras() {
@@ -272,7 +264,7 @@ public class JogoDaForca {
 		gerenciarTemas_imprimirTemas();
 
 		System.out.println("Deseja listar as palavras de que tema?");
-		tema = ler.next();
+		tema = ler.next().toLowerCase();
 		ler.nextLine();
 		posicao = gerenciarTemas_ferramentaDeBusca(tema);
 		if (posicao == -1) {
@@ -298,7 +290,7 @@ public class JogoDaForca {
 		int posicao;
 		System.out.println("Iniciando a busca de palavras!");
 		System.out.println("Qual palavra voce deseja buscar?");
-		palavra = ler.next();
+		palavra = ler.next().toLowerCase();
 		ler.nextLine();
 		posicao = gerenciarPalavras_ferramentaDeBusca(palavra);
 		if (posicao == -1) {
@@ -328,7 +320,7 @@ public class JogoDaForca {
 		int posicao;
 		System.out.println("Cadastrar palavras iniciado com sucesso!");
 		System.out.println("Primeiro, escolha o tema em que deseja cadastrar a palavra:");
-		tema = ler.next();
+		tema = ler.next().toLowerCase();
 		ler.nextLine();
 		posicao = gerenciarTemas_ferramentaDeBusca(tema);
 		if (posicao == -1) {
@@ -348,7 +340,7 @@ public class JogoDaForca {
 		int i = 0;
 		while (i < Cadastro) {
 			System.out.println("Digite a palavra que deseja cadastrar:");
-			String Palavra = ler.next();
+			String Palavra = ler.next().toLowerCase();
 			ler.nextLine();
 			if (gerenciarPalavras_checarExistencia(Palavra, Tema)) {
 				System.out.println("Esta palavra ja esta cadastrada.");
@@ -376,6 +368,128 @@ public class JogoDaForca {
 			}
 		}
 		return encontrei;
+	}
+
+	private static void jogo() {
+		String tema;
+		String[] temaEscolhido;
+		int posicaoTema;
+		boolean rejogar = true;
+		System.out.println("Iniciando o Jogo Da Forca!");
+		do {
+			System.out.println("Escolha em qual tema voce deseja sortear a palavra para acertar:");
+			gerenciarTemas_imprimirTemas();
+
+			System.out.println("Qual tema deseja escolher?");
+			tema = ler.next().toLowerCase();
+			ler.nextLine();
+			posicaoTema = gerenciarTemas_ferramentaDeBusca(tema);
+
+			if (posicaoTema == -1) {
+				System.out.println(
+						"Esse tema nao existe!Pode cadastra-lo(recomendado se estiver jogando com mais uma pessoa) se quiser.");
+				continue;
+			}
+			temaEscolhido = JogoDaForca.TemasEPalavras[posicaoTema];
+			String palavraEscolhida = jogo_escolherPalavra(temaEscolhido);
+			rejogar = jogo_iniciarRodada(palavraEscolhida.toCharArray(), palavraEscolhida.length());
+		} while (rejogar != false);
+	}
+
+	private static String jogo_escolherPalavra(String[] temaEscolhido) {
+		Random numberGenerator = new Random();
+		int indiceEscolhido;
+		do {
+			indiceEscolhido = numberGenerator.nextInt(Integer.parseInt(temaEscolhido[1]));
+		} while (indiceEscolhido <= 1);
+		return temaEscolhido[indiceEscolhido];
+	}
+
+	private static boolean jogo_iniciarRodada(char[] palavraEscolhida, int tamanhoPalavraEscolhida) {
+		char[] letrasChutadas = new char[tamanhoPalavraEscolhida + 5];
+		char[] letrasCorretas = jogo_iniciarRodada_letrasCorretas(tamanhoPalavraEscolhida);
+		char letraLida;
+		int qtdLetrasChutadas = 0;
+		int erros = 0;
+		int acertos = 0;
+		char jogarDnv;
+
+		jogo_iniciarRodada_forca(tamanhoPalavraEscolhida, letrasCorretas, erros);
+		while (erros < 5 && acertos < tamanhoPalavraEscolhida) {
+			System.out.println("");
+			System.out.println("Digite a letra que deseja chutar: ");
+			letraLida = Character.toLowerCase(ler.next().charAt(0));
+			ler.nextLine();
+
+			if (jogo_iniciarRodada_checarRepetidas(letrasChutadas, letraLida, qtdLetrasChutadas)) {
+				System.out.println("Tente outra letra!");
+				continue;
+			}
+			int acertoAtual = jogo_iniciarRodada_checarChute(letrasCorretas, palavraEscolhida, tamanhoPalavraEscolhida,
+					letraLida);
+			if (acertoAtual != 0) {
+				acertos += acertoAtual;
+			} else {
+				erros++;
+			}
+			letrasChutadas[qtdLetrasChutadas] = letraLida;
+			qtdLetrasChutadas++;
+			jogo_iniciarRodada_forca(tamanhoPalavraEscolhida, letrasCorretas, erros);
+		}
+		System.out.println("");
+		if (acertos == tamanhoPalavraEscolhida) {
+			System.out
+					.println("Voce acertou a palavra!Deseja jogar novamente?S para rejogar, qualquer outra coisa para nao.");
+		} else if (erros == 5) {
+			System.out.println("Voce perdeu! Deseja jogar novamente?S para rejogar,qualquer outra coisa para nao.");
+		}
+		jogarDnv = Character.toLowerCase(ler.next().charAt(0));
+		ler.nextLine();
+
+		return jogarDnv == 's';
+	}
+
+	private static int jogo_iniciarRodada_checarChute(char[] letrasCorretas, char[] palavraEscolhida,
+			int tamanhoPalavraEscolhida, char letraEscolhida) {
+		int acertos = 0;
+		for (int i = 0; i < tamanhoPalavraEscolhida; i++) {
+			if (palavraEscolhida[i] == letraEscolhida) {
+				letrasCorretas[i] = letraEscolhida;
+				acertos++;
+			}
+		}
+		return acertos;
+	}
+
+	private static void jogo_iniciarRodada_forca(int tamanhoPalavraEscolhida, char[] letrasCorretas, int erros) {
+		System.out.printf("Adivinhe a seguinte palavra!Voce possui %d tentativas.\n", (5 - erros));
+		System.out.println("--------");
+		System.out.println("|      |");
+		System.out.println("|");
+		System.out.println("|");
+		System.out.print("| ");
+
+		for (int i = 0; i < tamanhoPalavraEscolhida; i++) {
+			System.out.print(letrasCorretas[i] + " ");
+		}
+	}
+
+	private static boolean jogo_iniciarRodada_checarRepetidas(char[] letrasChutadas, char letraLida,
+			int qtdLetrasChutadas) {
+		for (int i = 0; i < qtdLetrasChutadas; i++) {
+			if (letrasChutadas[i] == letraLida) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private static char[] jogo_iniciarRodada_letrasCorretas(int tamanhoPalavraEscolhida) {
+		char[] retorno = new char[tamanhoPalavraEscolhida];
+		for (int i = 0; i < tamanhoPalavraEscolhida; i++) {
+			retorno[i] = '_';
+		}
+		return retorno;
 	}
 
 }
