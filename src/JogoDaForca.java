@@ -33,7 +33,7 @@ public class JogoDaForca {
 					break;
 				case 2:
 					clear();
-					// gerenciarPalavras(TemasEPalavras,contadorTemas,contadorPalavras);
+					gerenciarPalavras();
 					break;
 				case 3:
 					clear();
@@ -50,6 +50,106 @@ public class JogoDaForca {
 
 		} while (menu != 4);
 
+	}
+
+	private static void gerenciarPalavras() {
+		int menu;
+
+		do {
+
+			System.out.println("Gerenciador de palavras iniciado com sucesso!");
+			System.out.println("Escolha uma das opcoes abaixo:");
+			System.out.println("1-Cadastrar palavra:");
+			System.out.println("2-Excluir palavras");
+			System.out.println("3-Buscar palavras");
+			System.out.println("4-Listar palavras");
+			System.out.println("5-Voltar");
+
+			menu = ler.nextInt();
+			ler.nextLine();
+
+			switch (menu) {
+				case 1:
+					gerenciarPalavras_cadastro();
+					break;
+
+				case 2:
+
+					break;
+
+				case 3:
+
+					break;
+
+				case 4:
+
+					break;
+
+				case 5:
+
+					break;
+
+				default:
+					System.out.println("Opcao invalida neste escopo, digite uma funcao disponivel.");
+					break;
+
+			}
+		} while (menu != 5);
+	}
+
+	private static void gerenciarPalavras_cadastro() {
+		String tema;
+		int posicao;
+		System.out.println("Cadastrar palavras iniciado com sucesso!");
+		System.out.println("Primeiro, escolha o tema em que deseja cadastrar a palavra:");
+		tema = ler.next();
+		ler.nextLine();
+		posicao = gerenciarTemas_ferramentaDeBusca(tema);
+		if (posicao == -1) {
+			System.out.println(("Esse tema ainda nao existe!Voce pode cadastra-lo caso queira."));
+		} else {
+			gerenciarPalavras_cadastrarPalavras(posicao);
+		}
+	}
+
+	private static void gerenciarPalavras_cadastrarPalavras(int posicao) {
+		String[] Tema = JogoDaForca.TemasEPalavras[posicao];
+		int tamanhoTema = Integer.parseInt(Tema[1]);// transformar de string para int.
+		int Cadastro;
+		System.out.println("Quantas palavras deseja cadastrar?");
+		Cadastro = ler.nextInt();
+		ler.nextLine();
+		int i = 0;
+		while (i < Cadastro) {
+			System.out.println("Digite a palavra que deseja cadastrar:");
+			String Palavra = ler.next();
+			ler.nextLine();
+			if (gerenciarPalavras_checarExistencia(Palavra, Tema)) {
+				System.out.println("Esta palavra ja esta cadastrada.");
+				continue;
+			} else {
+				Tema[tamanhoTema + 2] = Palavra;
+				tamanhoTema++;
+				Tema[1] = "" + tamanhoTema;// gambiarra para transformar o numero em uma string.
+				i++;
+			}
+		}
+		System.out.println("Palavras cadastradas com suceso!");
+		System.out.println("Aperte ENTER para continuar.");
+		ler.nextLine();
+	}
+
+	private static boolean gerenciarPalavras_checarExistencia(String Palavra, String[] Tema) {
+		boolean encontrei = false;
+		int tamanho = Integer.parseInt(Tema[1]);
+		for (int i = 2; i < tamanho + 2; i++) {
+			if (Palavra.equals(Tema[i])) {
+
+				encontrei = true;
+				break;
+			}
+		}
+		return encontrei;
 	}
 
 	static void gerenciarTemas() {
@@ -102,12 +202,19 @@ public class JogoDaForca {
 		buscador = ler.next();
 		ler.nextLine();
 
-		gerenciarTemas_ferramentaDeBusca(buscador);
+		int posicao = gerenciarTemas_ferramentaDeBusca(buscador);
+		if (posicao == -1) {
+			System.out.println("Tema nao encontrado.Voce pode cadastra-lo caso queira.");
+		} else {
+			System.out.printf("Tema encontrado na posicao %d\n", (posicao + 1));
+		}
+		System.out.println("Aperte ENTER para continuar.");
+		ler.nextLine();
 		clear();
 
 	}
 
-	private static void gerenciarTemas_ferramentaDeBusca(String buscador) {
+	private static int gerenciarTemas_ferramentaDeBusca(String buscador) {
 		boolean encontrei = false;
 		int posicao;
 		for (posicao = 0; posicao < JogoDaForca.contadorTemas; posicao++) {
@@ -118,12 +225,10 @@ public class JogoDaForca {
 			}
 		}
 		if (encontrei == false) {
-			System.out.println("Tema nao encontrado.Voce pode cadastra-lo caso queira.");
+			return -1;
 		} else {
-			System.out.printf("Tema encontrado na posicao %d\n", (posicao + 1));
+			return posicao;
 		}
-		System.out.println("Aperte ENTER para continuar.");
-		ler.nextLine();
 	}
 
 	private static void gerenciarTemas_cadastro() {
@@ -201,7 +306,7 @@ public class JogoDaForca {
 				"Branco", "Azul", "Verde", "Laranja",
 				"Bege", "Marrom" };
 
-		for (int i = 0; i < 11; i++) {
+		for (int i = 0; i < 12; i++) {
 			JogoDaForca.TemasEPalavras[0][i] = Carros[i];
 			JogoDaForca.TemasEPalavras[1][i] = Objetos[i];
 			JogoDaForca.TemasEPalavras[2][i] = Animais[i];
