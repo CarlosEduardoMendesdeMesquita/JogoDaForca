@@ -95,7 +95,35 @@ public class JogoDaForca {
 	}
 
 	private static void gerenciarTemas_buscar() {
+		String buscador;
+		System.out.println("Iniciando a busca de temas!");
+		System.out.println("Digite o Tema que deseja buscar: ");
 
+		buscador = ler.next();
+		ler.nextLine();
+
+		gerenciarTemas_ferramentaDeBusca(buscador);
+		clear();
+
+	}
+
+	private static void gerenciarTemas_ferramentaDeBusca(String buscador) {
+		boolean encontrei = false;
+		int posicao;
+		for (posicao = 0; posicao < JogoDaForca.contadorTemas; posicao++) {
+			if (buscador.equals(JogoDaForca.TemasEPalavras[posicao][0])) {
+
+				encontrei = true;
+				break;
+			}
+		}
+		if (encontrei == false) {
+			System.out.println("Tema nao encontrado.Voce pode cadastra-lo caso queira.");
+		} else {
+			System.out.printf("Tema encontrado na posicao %d\n", (posicao + 1));
+		}
+		System.out.println("Aperte ENTER para continuar.");
+		ler.nextLine();
 	}
 
 	private static void gerenciarTemas_cadastro() {
