@@ -1,5 +1,5 @@
-import java.util.Scanner;
 import java.util.Random;
+import java.util.Scanner;
 
 public class JogoDaForca {
 	static int contadorTemas = 0;
@@ -58,7 +58,8 @@ public class JogoDaForca {
 		do {
 			System.out.println("Gerenciador de temas iniciado com sucesso!");
 			System.out.println("Escolha uma das opcoes abaixo:");
-			System.out.println("1-Cadastrar Temas(farei uma lista para você se orientar, voce pode ignora-la caso queira)");
+			System.out.println(
+					"1-Cadastrar Temas(farei uma lista para você se orientar, voce pode ignora-la caso queira)");
 			System.out.println("2-Excluir Tema");
 			System.out.println("3-Buscar Tema");
 			System.out.println("4-Voltar");
@@ -145,19 +146,15 @@ public class JogoDaForca {
 	}
 
 	public static void preCadastro() {
-		String[] Carros = { "carros", "10", "monza", "opala", "marea", "doblo",
-				"ferrari", "mustang", "porsche", "uno", "gol",
-				"punto" };
+		String[] Carros = { "carros", "10", "monza", "opala", "marea", "doblo", "ferrari", "mustang", "porsche", "uno",
+				"gol", "punto" };
 		String[] Objetos = { "objetos", "10", "cadeira", "chave", "bola", "lousa", "giz", "lapis", "caneta", "borracha",
 				"canivete", "regua" };
-		String[] Animais = { "animais", "10", "cachorro", "gato", "cavalo", "iguana",
-				"ratel", "anta", "hipopotamo", "girafa",
-				"galinha", "pato" };
-		String[] Paises = { "paises", "10", "eslovaquia", "franca", "belgica", "alemanha",
-				"brasil", "russia", "mexico",
+		String[] Animais = { "animais", "10", "cachorro", "gato", "cavalo", "iguana", "ratel", "anta", "hipopotamo",
+				"girafa", "galinha", "pato" };
+		String[] Paises = { "paises", "10", "eslovaquia", "franca", "belgica", "alemanha", "brasil", "russia", "mexico",
 				"butao", "india", "china" };
-		String[] Cores = { "cores", "10", "amarelo", "vermelho", "preto", "cinza",
-				"branco", "azul", "verde", "laranja",
+		String[] Cores = { "cores", "10", "amarelo", "vermelho", "preto", "cinza", "branco", "azul", "verde", "laranja",
 				"bege", "marrom" };
 
 		for (int i = 0; i < 12; i++) {
@@ -318,8 +315,8 @@ public class JogoDaForca {
 		int indiceEscolhido = gerenciarTemas_ferramentaDeBusca(tema);
 
 		if (indiceEscolhido == -1) {
-			System.out
-					.println("Tema inexistente, logo nao ha palavras para serem deletadas. Voce pode cadastra-lo caso queira.");
+			System.out.println(
+					"Tema inexistente, logo nao ha palavras para serem deletadas. Voce pode cadastra-lo caso queira.");
 			return;
 		}
 
@@ -442,9 +439,9 @@ public class JogoDaForca {
 		String tema;
 		int posicao;
 		System.out.println("Cadastrar palavras iniciado com sucesso!");
-		System.out.println("Primeiro, escolha o tema em que deseja cadastrar a palavra:");
+		System.out.println("Lista de temas existentes para cadastrar palavras:");
 		gerenciarTemas_imprimirTemas();
-
+		System.out.println("Digite o tema em que deseja cadastrar uma palavra:");
 		tema = ler.next().toLowerCase();
 		ler.nextLine();
 		posicao = gerenciarTemas_ferramentaDeBusca(tema);
@@ -569,8 +566,8 @@ public class JogoDaForca {
 		}
 		System.out.println("");
 		if (acertos == tamanhoPalavraEscolhida) {
-			System.out
-					.println("Voce acertou a palavra!Deseja jogar novamente?S para rejogar, qualquer outra coisa para nao.");
+			System.out.println(
+					"Voce acertou a palavra!Deseja jogar novamente?S para rejogar, qualquer outra coisa para nao.");
 		} else if (erros == 5) {
 			System.out.println("Voce perdeu! Deseja jogar novamente?S para rejogar,qualquer outra coisa para nao.");
 		}
