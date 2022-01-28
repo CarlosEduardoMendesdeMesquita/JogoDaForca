@@ -72,7 +72,7 @@ public class JogoDaForca {
 					break;
 
 				case 2:
-
+					gerenciarTemas_deletar();
 					break;
 
 				case 3:
@@ -94,12 +94,61 @@ public class JogoDaForca {
 
 	}
 
+	private static void gerenciarTemas_deletar() {
+		String tema;
+		String[] temaEscolhido;
+		int indiceEscolhido;
+		System.out.println("Delecao de temas iniciada com sucesso...");
+		System.out.println("Digite o tema que deseja deletar(lista de temas existentes abaixo)");
+
+		gerenciarTemas_imprimirTemas();
+
+		System.out.println("Digite o nome do tema a ser deletado");
+		tema = ler.next().toLowerCase();
+		ler.nextLine();
+
+		indiceEscolhido = gerenciarTemas_ferramentaDeBusca(tema);
+		if (indiceEscolhido == -1) {
+			System.out.println("Tema inexistente.");
+			return;
+		}
+		temaEscolhido = JogoDaForca.TemasEPalavras[indiceEscolhido];
+
+		if (temaEscolhido[1].equals("0") == false) {
+			System.out.println("Nao foi possivel excluir o tema.Verifique se existem palavras cadastradas nesse tema.");
+			return;
+		}
+
+		gerenciarTemas_deletar_ferramentaDeDeletar(indiceEscolhido);
+		System.out.println("Deletado");
+	}
+
+	private static void gerenciarTemas_deletar_ferramentaDeDeletar(int indiceEscolhido) {
+		String[] temaEscolhido = JogoDaForca.TemasEPalavras[indiceEscolhido];
+		int QuantidadePalavrasTemas = Integer.parseInt(temaEscolhido[1]);
+
+		if (indiceEscolhido == JogoDaForca.contadorTemas - 1) {
+			for (int j = 0; j < QuantidadePalavrasTemas + 2; j++) {
+				temaEscolhido[j] = null;
+			}
+		} else {
+			for (int i = indiceEscolhido; i < JogoDaForca.contadorTemas; i++) {
+				if (JogoDaForca.TemasEPalavras.length == i) {
+					JogoDaForca.TemasEPalavras[i] = new String[JogoDaForca.TemasEPalavras.length];
+				} else {
+					JogoDaForca.TemasEPalavras[i] = JogoDaForca.TemasEPalavras[i + 1];
+				}
+			}
+		}
+
+		JogoDaForca.contadorTemas--;
+	}
+
 	public static void preCadastro() {
 		String[] Carros = { "carros", "10", "monza", "opala", "marea", "doblo",
 				"ferrari", "mustang", "porsche", "uno", "gol",
 				"punto" };
-		String[] Objetos = { "objetos", "10", "cadeira", "chave", "bola", "lousa", "giz",
-				"lapis", "caneta", "borracha",
+		String[] Objetos = { "objetos", "10", "cadeira", "chave", "bola", "lousa", "giz", "lapis", "caneta", "borracha",
 				"canivete", "regua" };
 		String[] Animais = { "animais", "10", "cachorro", "gato", "cavalo", "iguana",
 				"ratel", "anta", "hipopotamo", "girafa",
@@ -233,7 +282,7 @@ public class JogoDaForca {
 					break;
 
 				case 2:
-
+					gerenciarPalavras_deletar();
 					break;
 
 				case 3:
@@ -254,6 +303,79 @@ public class JogoDaForca {
 
 			}
 		} while (menu != 5);
+	}
+
+	private static void gerenciarPalavras_deletar() {
+		String tema;
+
+		System.out.println("Delecao de palavras iniciado com sucesso...");
+		gerenciarTemas_imprimirTemas();
+
+		System.out.println("Em qual tema voce deseja deletar uma palavra?");
+		tema = ler.next().toLowerCase();
+		ler.nextLine();
+
+		int indiceEscolhido = gerenciarTemas_ferramentaDeBusca(tema);
+
+		if (indiceEscolhido == -1) {
+			System.out
+					.println("Tema inexistente, logo nao ha palavras para serem deletadas. Voce pode cadastra-lo caso queira.");
+			return;
+		}
+
+		gerenciarPalavras_deletar_escolherPalavra(indiceEscolhido);
+		System.out.println("Palavra deletada com sucesso!");
+		System.out.println("Digite ENTER para continuar.");
+		ler.nextLine();
+	}
+
+	private static void gerenciarPalavras_deletar_escolherPalavra(int indiceEscolhido) {
+		String[] tema = JogoDaForca.TemasEPalavras[indiceEscolhido];
+		String palavraEscolhida;
+
+		System.out.println("Palavras existentes neste tema:");
+		gerenciarPalavras_ferramentaDeListagem(indiceEscolhido);
+		System.out.println("Qual palavra deseja deletar?");
+
+		palavraEscolhida = ler.next().toLowerCase();
+		ler.nextLine();
+
+		int posicaoEscolhida = gerenciarPalavras_deletar_buscarPalavra(tema, palavraEscolhida);
+
+		if (posicaoEscolhida == -1) {
+			System.out.println("Palavra nao encontrada!Nao precisa se preocupar em deleta-la.");
+			return;
+		}
+		gerenciarPalavras_deletar_ferramentaDeDeletar(tema, posicaoEscolhida);
+
+	}
+
+	private static void gerenciarPalavras_deletar_ferramentaDeDeletar(String[] tema, int posicaoEscolhida) {
+		int QuantidadePalavrasTemas = Integer.parseInt(tema[1]);
+
+		if (posicaoEscolhida == QuantidadePalavrasTemas + 1) {
+			tema[posicaoEscolhida] = null;
+		} else {
+			for (int i = posicaoEscolhida; i < QuantidadePalavrasTemas + 2; i++) {
+				if (tema.length == i) {
+					tema[i] = null;
+				} else {
+					tema[i] = tema[i + 1];
+				}
+			}
+		}
+
+		tema[1] = (QuantidadePalavrasTemas - 1) + "";
+	}
+
+	private static int gerenciarPalavras_deletar_buscarPalavra(String[] tema, String palavraEscolhida) {
+		int qtdPalavras = Integer.parseInt(tema[1]);
+		for (int i = 2; i < qtdPalavras + 2; i++) {
+			if (tema[i].equals(palavraEscolhida)) {
+				return i;
+			}
+		}
+		return -1;
 	}
 
 	private static void gerenciarPalavras_Listar() {
@@ -321,6 +443,8 @@ public class JogoDaForca {
 		int posicao;
 		System.out.println("Cadastrar palavras iniciado com sucesso!");
 		System.out.println("Primeiro, escolha o tema em que deseja cadastrar a palavra:");
+		gerenciarTemas_imprimirTemas();
+
 		tema = ler.next().toLowerCase();
 		ler.nextLine();
 		posicao = gerenciarTemas_ferramentaDeBusca(tema);
