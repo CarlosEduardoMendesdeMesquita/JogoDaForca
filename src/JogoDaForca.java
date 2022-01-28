@@ -449,18 +449,6 @@ public class JogoDaForca {
 		return jogarDnv == 's';
 	}
 
-	private static int jogo_iniciarRodada_checarChute(char[] letrasCorretas, char[] palavraEscolhida,
-			int tamanhoPalavraEscolhida, char letraEscolhida) {
-		int acertos = 0;
-		for (int i = 0; i < tamanhoPalavraEscolhida; i++) {
-			if (palavraEscolhida[i] == letraEscolhida) {
-				letrasCorretas[i] = letraEscolhida;
-				acertos++;
-			}
-		}
-		return acertos;
-	}
-
 	private static void jogo_iniciarRodada_forca(int tamanhoPalavraEscolhida, char[] letrasCorretas, int erros) {
 		System.out.printf("Adivinhe a seguinte palavra!Voce possui %d tentativas.\n", (5 - erros));
 		System.out.println("--------");
@@ -472,6 +460,18 @@ public class JogoDaForca {
 		for (int i = 0; i < tamanhoPalavraEscolhida; i++) {
 			System.out.print(letrasCorretas[i] + " ");
 		}
+	}
+
+	private static int jogo_iniciarRodada_checarChute(char[] letrasCorretas, char[] palavraEscolhida,
+			int tamanhoPalavraEscolhida, char letraEscolhida) {
+		int acertos = 0;
+		for (int i = 0; i < tamanhoPalavraEscolhida; i++) {
+			if (palavraEscolhida[i] == letraEscolhida) {
+				letrasCorretas[i] = letraEscolhida;
+				acertos++;
+			}
+		}
+		return acertos;
 	}
 
 	private static boolean jogo_iniciarRodada_checarRepetidas(char[] letrasChutadas, char letraLida,
