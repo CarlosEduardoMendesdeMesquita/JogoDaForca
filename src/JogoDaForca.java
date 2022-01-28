@@ -166,6 +166,7 @@ public class JogoDaForca {
 
 	private static void gerenciarTemas_salvarNovoTema(String novoTema) {
 		JogoDaForca.TemasEPalavras[contadorTemas][0] = novoTema;
+		JogoDaForca.TemasEPalavras[contadorTemas][1] = "0";
 		contadorTemas++;
 	}
 
@@ -391,6 +392,12 @@ public class JogoDaForca {
 				continue;
 			}
 			temaEscolhido = JogoDaForca.TemasEPalavras[posicaoTema];
+
+			if (temaEscolhido[1].equals("0")) {
+				System.out.println("Esse tema nao possui palavras!Cadastre algumas antes de poder jogar com ele.");
+				continue;
+			}
+
 			String palavraEscolhida = jogo_escolherPalavra(temaEscolhido);
 			rejogar = jogo_iniciarRodada(palavraEscolhida.toCharArray(), palavraEscolhida.length());
 		} while (rejogar != false);
